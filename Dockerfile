@@ -1,3 +1,7 @@
+FROM maven AS build
+WORKDIR /app
+RUN mvn clean install
+
 FROM oraclelinux:7-slim
 
 RUN  yum -y install oracle-instantclient-release-el7 && \
