@@ -5,7 +5,7 @@ COPY pom.xml .
 RUN mvn -B -f pom.xml dependency:go-offline
 
 COPY src/ /app/src/
-RUN mvn -B -o package
+RUN mvn -B package
 
 # Runtime stage
 FROM tomcat:9
