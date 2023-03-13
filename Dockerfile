@@ -1,14 +1,13 @@
-FROM maven AS build
+# Builder stage
+FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
-RUN mvn clean install
+COPY pom.xml .
+RUN mvn -B -f pom.xml dependency:go-offline
 
-FROM oraclelinux:7-slim
+COPY src/ /app/src/
+RUN mvn -B -o package
 
-RUN  yum -y install oracle-instantclient-release-el7 && \
-     yum -y install oracle-instantclient-basic oracle-instantclient-devel oracle-instantclient-sqlplus && \
-     rm -rf /var/cache/yum
-
-# Uncomment if the tools package is added
-# ENV PATH=$PATH:/usr/lib/oracle/21/client64/bin
-
-CMD ["sqlplus", "-v"]
+# Runtime stage
+FROM tomcat:9-jdk17-adoptopenjdk-hotspot
+COPY --from=build /app/target/your-webapp.war /usr/local/tomcat/webapps/
+CMD ["catalina.sh", "run"]
