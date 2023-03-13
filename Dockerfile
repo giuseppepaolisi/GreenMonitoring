@@ -8,7 +8,7 @@ RUN  yum -y install oracle-instantclient-release-el7 && \
 # ENV PATH=$PATH:/usr/lib/oracle/21/client64/bin
 
 # Builder stage
-FROM maven:3.9.0-eclipse-temurin-11 AS build
+FROM maven:3.8.2-eclipse-temurin-16 AS build
 WORKDIR /app
 COPY pom.xml .
 RUN mvn -B -f pom.xml dependency:go-offline
