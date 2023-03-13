@@ -1,10 +1,10 @@
-FROM oraclelinux:8-slim
+FROM oraclelinux:7-slim
 
-ENV JAVA_HOME=/usr/local/graalvm-ce-java17-21.3.0
-ENV PATH=$PATH:$JAVA_HOME/bin
+RUN  yum -y install oracle-instantclient-release-el7 && \
+     yum -y install oracle-instantclient-basic oracle-instantclient-devel oracle-instantclient-sqlplus && \
+     rm -rf /var/cache/yum
 
-WORKDIR /app
+# Uncomment if the tools package is added
+# ENV PATH=$PATH:/usr/lib/oracle/21/client64/bin
 
-COPY . /app
-
-CMD ["java", "-jar", "your-application.jar"]
+CMD ["sqlplus", "-v"]
