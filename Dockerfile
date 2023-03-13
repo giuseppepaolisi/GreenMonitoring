@@ -1,4 +1,10 @@
-FROM maven:latest
-COPY . /app
+FROM oracle/graalvm-ce:latest
+
+ENV JAVA_HOME=/usr/local/graalvm-ce-java17-21.3.0
+ENV PATH=$PATH:$JAVA_HOME/bin
+
 WORKDIR /app
-CMD ["mvn", "clean", "install"]
+
+COPY . /app
+
+CMD ["java", "-jar", "your-application.jar"]
