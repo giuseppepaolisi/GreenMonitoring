@@ -8,6 +8,6 @@ COPY src/ /app/src/
 RUN mvn -B -o package
 
 # Runtime stage
-FROM tomcat:9-jdk17-adoptopenjdk-hotspot
+FROM tomcat:9
 COPY --from=build /app/target/your-webapp.war /usr/local/tomcat/webapps/
 CMD ["catalina.sh", "run"]
