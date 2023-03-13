@@ -1,5 +1,5 @@
 # Builder stage
-FROM maven:3.8.4-openjdk-17-slim AS build
+FROM maven:3.9.0-eclipse-temurin-11 AS build
 WORKDIR /app
 COPY pom.xml .
 RUN mvn -B -f pom.xml dependency:go-offline
